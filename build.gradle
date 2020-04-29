@@ -32,3 +32,17 @@ application {
     // Define the main class for the application.
     mainClassName = 'module.SocketLink'
 }
+
+run{
+    standardInput = System.in
+}
+
+jar {
+    from {
+        //configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtime.collect{zipTree(it)}
+    }
+    manifest {
+        attributes 'Main-Class': 'module.SocketLink'
+    }
+}

@@ -32,13 +32,13 @@ public class SocketLink{
             System.out.println("Connection established!");
             return socket;
         } catch(IOException e1) {
-            System.out.println("Input Error!");
+            System.out.println("Connection Error!");
         }
         //FIXME:是否要加返回非空的判断?
         return socket;
     }
 
-    public static void main (String[] args){
+    public static void main (String[] args) throws Exception{
         //先跟自己通信 TODO:将ip与端口的值参数化
         String ip="127.0.0.1";
         int port=12345;
@@ -54,7 +54,8 @@ public class SocketLink{
         }
         else
             System.out.println("Error Input!");
-        
         msg message=new msg(socket,sc);
+        sc.close();
+        socket.close();
     }
 }
