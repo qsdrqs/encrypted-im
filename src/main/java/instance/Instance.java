@@ -1,35 +1,56 @@
 package instance;
 
 import java.net.Socket;
+import java.util.Scanner;
 import java.io.*;
 
 public abstract class Instance {
-    public void sendMessage(Socket socket, String message) throws Exception {
-        OutputStream stream = socket.getOutputStream();
-        stream.write(message.getBytes("UTF-8"));
-        stream.close();
+
+    protected Socket socket;
+    private InputStream inputStream;
+    private OutputStream outputStream;
+
+    public Instance(Socket socket) {
+        this.socket = socket;
     }
 
-    public String getMessage(Socket socket) throws Exception {
-        InputStream stream = socket.getInputStream();
+    /*
+       输出获取部分
+     */
+    public void sendMessage(Scanner sc) throws Exception {
+        outputStream = socket.getOutputStream();
+        while (true) {
+            String message=sc.next();
+            if (message.equals("exit")) {
+                break;
+            }
+            outputStream.write(message.getBytes("UTF-8"));
+        }
+        outputStream.close();
+    }
+
+    /*
+       输入获取部分
+     */
+
+    public String receiveMessage() throws IOException {
+        inputStream = socket.getInputStream(); //这些流在一个socket中似乎只能打开一次。
         //缓冲区
         byte[] bytes = new byte[1024];
         //解码器
-        StringBuilder message = new StringBuilder();
+        String message=null;
         int len;
-        len = stream.read(bytes);
-        //没有消息就等待
-        //while (len == 0) {
-            //len = stream.read(bytes);
-        //}
+        System.out.println("start reading.");
+        len = inputStream.read(bytes);
+        System.out.println("end reading.");
         while (len != -1) {
-            System.out.println(len);
-            message.append(new String(bytes, 0, len, "UTF-8"));
-            len=stream.read(bytes);
+            message=new String(bytes, 0, len, "UTF-8");
+            System.out.println("来自" + socket.getInetAddress().toString() + "的消息：" + message);
+            len = inputStream.read(bytes);
         }
-        return message.toString();
+        inputStream.close();
+        System.out.println("message");
+        return message;
     }
-
-
 
 }

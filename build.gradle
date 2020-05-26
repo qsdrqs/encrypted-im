@@ -30,7 +30,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = 'module.SocketLink'
+    mainClassName = 'module.Main'
 }
 
 run{
@@ -43,6 +43,6 @@ jar {
         configurations.runtime.collect{zipTree(it)}
     }
     manifest {
-        attributes 'Main-Class': 'module.SocketLink'
+        attributes 'Main-Class': 'module.Main'
     }
 }
