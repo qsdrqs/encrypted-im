@@ -36,7 +36,7 @@ public abstract class Instance {
             对消息的处理
              */
             m.setContext(message);
-            m.setTimeStamp(new Date().toString());
+            m.setTimeStap(new Date().toString());
             oos.writeObject(m);
         }
     }

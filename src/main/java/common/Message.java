@@ -2,11 +2,11 @@ package common;
 
 public class Message implements java.io.Serializable{
     private String MesType;
-    private String sender;  //信息的发送者
+    private String sender;     //信息的发送者
     private String receiver;   //信息的接受者
-    private String context;     //信息内容
-    private String TimeStamp;   //时间戳
-    private String signture;    //数字签名
+    private String context;    //信息内容
+    private String timeStap;   //时间戳
+    private String signture;   //数字签名
 
     public String getMesType() {
         return MesType;
@@ -40,12 +40,12 @@ public class Message implements java.io.Serializable{
         this.context = context;
     }
 
-    public String getTimeStamp() {
-        return TimeStamp;
+    public String getTimeStap() {
+        return timeStap;
     }
 
-    public void setTimeStamp(String timeStamp) {
-        TimeStamp = timeStamp;
+    public void setTimeStap(String timeStap) {
+        this.timeStap = timeStap;
     }
     public String getSignture() {
         return signture;
@@ -60,7 +60,7 @@ public class Message implements java.io.Serializable{
         this.receiver = "Unknow";
         this.context = null;
         this.signture = "*******";
-        this.TimeStamp = null;
+        this.timeStap = null;
     }
 
 }
