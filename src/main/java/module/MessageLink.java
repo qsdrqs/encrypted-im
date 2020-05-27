@@ -22,7 +22,15 @@ public class MessageLink {
     private void send() {
         try {
             System.out.println("你现在可以发消息了：");
-            client.sendMessage(sc);
+            client.initSend();
+            while (true) {
+                String message = sc.next();
+                client.sendMessage(message);
+                if (message.equals("exit")) {
+                    break;
+                }
+            }
+            client.endSend();
         } catch (Exception e) {
             System.out.println("Send Error!");
             e.printStackTrace();
@@ -34,21 +42,25 @@ public class MessageLink {
         @Override
         public void run() {
             try {
+                client.initReceive();
                 while (true) {
-                    System.out.println("1");
                     String message = client.receiveMessage();
-                    System.out.println("Once Receive");
+                    if (message == null) {
+                        break;
+                    }
                     if (message.equals("exit")) {
                         System.out.println("远端结束了连接。");
                         break;
                     }
                     System.out.println("来自" + client.getIP() + "的消息：" + message);
                 }
-            } catch (Exception e) {
-                System.out.println("Listen Error!");
-                e.printStackTrace();
+                client.endReceive();
             }
+         catch (Exception e) {
+            System.out.println("Listen Error!");
+            e.printStackTrace();
         }
     }
+}
 
 }
