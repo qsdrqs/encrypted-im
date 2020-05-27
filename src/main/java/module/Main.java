@@ -1,10 +1,10 @@
 
 package module;
 
-import java.io.*;
-import java.net.*;
+import instance.Client;
+
+import java.net.Socket;
 import java.util.Scanner;
-import instance.*;
 
 public class Main {
     public static boolean isServer(Scanner sc) {
@@ -53,7 +53,7 @@ public class Main {
         if (is_message){
             Client client = new Client(socket);
             MessageLink messageLink=new MessageLink(client,sc);
-            messageLink.run();
+            messageLink.run(socket);
         }
 
         System.out.println("Exiting..");

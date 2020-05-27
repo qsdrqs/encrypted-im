@@ -9,11 +9,8 @@ public class Client extends Instance {
     }
 
     public String getIP(){
-        return super.socket.getInetAddress().toString();
+        return super.socket.getInetAddress().getHostAddress();
     }
-
-
-
 
 }
 
