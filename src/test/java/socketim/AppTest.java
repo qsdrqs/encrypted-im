@@ -3,10 +3,17 @@
  */
 package socketim;
 
+import tools.SHA256Util;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class AppTest {
+    @Test
+    public void test () {
+        String test="Hello Worlfdsa fd!";
+        System.out.println(SHA256Util.stringToSHA256(test));
+
+    }
 
 
 }

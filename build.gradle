@@ -24,6 +24,9 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.2-jre'
 
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.14'
+
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
