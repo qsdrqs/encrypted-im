@@ -10,22 +10,23 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.security.PublicKey;
 
-public class PukExchange {
+public class PublicKeyExchange {
     Client client;
 
-    public PukExchange(Client client) {
+    public PublicKeyExchange(Client client) {
         this.client = client;
     }
 
-    public PublicKey doExchange() {
+    public PublicKey doExchange() throws Exception{
         PublicKey othPuk = null;
         System.out.println("现在正在交换公钥...");
-        byte [] bytes = client.user.getPuk().getEncoded();
+        byte [] bytes = ObjectAndBytes.toByteArray(client.user.getPuk());
         client.initSend();
         client.sendMessage(bytes);
-        client.initReceive;
+        client.initReceive();
         byte[] rePuk = client.receiveMessage();
         othPuk = (PublicKey)ObjectAndBytes.toObject(rePuk);
+        System.out.println("交换公钥成功");
         return othPuk;
     }
 

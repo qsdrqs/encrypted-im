@@ -1,12 +1,9 @@
 package instance;
 
-import common.Message;
-import tools.ObjectAndBytes;
+import module.Main;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Date;
-import java.util.Scanner;
 
 public abstract class Instance {
 
@@ -49,9 +46,13 @@ public abstract class Instance {
     public byte[] receiveMessage() throws Exception {
 
         System.out.println("start reading.");
-        byte[] bytes = new byte[10240];
+        byte[] buffer = new byte[10240];
 
-        inputStream.read(bytes);
+        int len=inputStream.read(buffer);
+
+        //保证返回的buffer长度跟收到的长度匹配
+        byte[] bytes=new byte[len];
+        System.arraycopy(buffer,0,bytes,0,len);
         return bytes;
     }
 

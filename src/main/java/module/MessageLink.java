@@ -13,21 +13,19 @@ import common.Message;
 
 public class MessageLink {
 
-    Client client;
-    Scanner sc;
-    Socket socket;
-    private PublicKey OtherpuK;
-    public MessageLink(Client client, Scanner sc) {
+    private Client client;
+    private Scanner sc;
+    private PublicKey otherPuK;
+
+    public MessageLink(Client client, Scanner sc,PublicKey otherPuK) {
         this.client = client;
         this.sc = sc;
+        this.otherPuK= otherPuK;
     }
 
-    public void run(Socket socket ) {
-        this.socket = socket;
+    public void run() {
         Listen listenThread = new Listen();
         listenThread.start();
-        //交换公钥
-       // PukExchange.doExchange(socket,this.client);
         send();
     }
 
@@ -39,8 +37,12 @@ public class MessageLink {
                 Message message = new Message();
                 message.setContext(sc.nextLine());
                 message.setTimeStap(new Date());
-                byte[] bytes=ObjectAndBytes.toByteArray(message);
-                client.sendMessage(bytes);
+                byte[] sourceBytes=ObjectAndBytes.toByteArray(message);
+
+                //encrypt
+                byte[] encryptedBytes=CipherModule.encrypt(sourceBytes,otherPuK);
+
+                client.sendMessage(encryptedBytes);
                 if (message.getContext().equals("exit")) {
                     break;
                 }
@@ -58,12 +60,15 @@ public class MessageLink {
             try {
                 client.initReceive();
                 while (true) {
-                    byte[] bytes=client.receiveMessage();
-                    if(bytes==null){
+                    byte[] sourceBytes=client.receiveMessage();
+                    if(sourceBytes==null){
                         continue;
                     }
-                    Message message=(Message)ObjectAndBytes.toObject(bytes);
-                    System.out.println("Once Receive");
+
+                    //decrypt
+                    byte[] decryptedBytes=CipherModule.decrypt(sourceBytes,client.user.getPrk());
+
+                    Message message=(Message)ObjectAndBytes.toObject(decryptedBytes);
                     if (message.getContext().equals("exit")) {
                         System.out.println("远端结束了连接。");
                         break;
