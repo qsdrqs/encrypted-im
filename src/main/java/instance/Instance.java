@@ -11,6 +11,8 @@ import java.util.Scanner;
 public abstract class Instance {
 
     protected Socket socket;
+    private OutputStream outputStream;
+    private InputStream inputStream;
 
     public Instance(Socket socket) {
         this.socket = socket;
@@ -19,47 +21,38 @@ public abstract class Instance {
     /*
        输出获取部分
      */
-    public void sendMessage(Scanner sc) throws Exception {
-        OutputStream outputStream = socket.getOutputStream();
-        while (true) {
-            Message m = new Message();
-            String message = sc.nextLine();
-            if (message.equals("exit")) {
-                break;
-            }
-            m.setContext(message);
-            m.setTimeStap(new Date());
-            //obj to bytes
-            byte[] bytes = ObjectAndBytes.toByteArray(m);
-            //message encryption
+    public void initSend() throws IOException {
+        outputStream = socket.getOutputStream();
+    }
 
-            outputStream.write(bytes);
+    public void endSend() throws IOException {
+        outputStream.close();
+    }
 
-        }
+    public void sendMessage(byte[] bytes) throws Exception {
+        outputStream.write(bytes);
+
     }
 
     /*
        输入获取部分
      */
 
+    public void initReceive() throws Exception{
+        inputStream = socket.getInputStream();
+    }
 
-    public String receiveMessage() throws Exception {
+    public void endReceive() throws Exception{
+        inputStream.close();
+    }
 
-        InputStream inputStream = socket.getInputStream();
+    public byte[] receiveMessage() throws Exception {
+
         System.out.println("start reading.");
-        byte[] bytes = new byte[1024000];
+        byte[] bytes = new byte[10240];
 
-        int len = inputStream.read(bytes);
-        Message dencrytedMsg = null;
-        if (len != -1) {
-
-            //message dencryption
-
-            //bytes to obj
-
-            dencrytedMsg = (Message)ObjectAndBytes.toObject(bytes);
-        }
-        return  dencrytedMsg.getContext();
+        inputStream.read(bytes);
+        return bytes;
     }
 
 }
