@@ -1,5 +1,6 @@
 package common;
 
+import java.security.PublicKey;
 import java.util.Date;
 
 public class Message implements java.io.Serializable {
@@ -9,7 +10,7 @@ public class Message implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private int MesType;
     private String sender;     //信息的发送者
-    private String receiver;   //信息的接受者
+    private String  receiver;   //信息的接受者
     private String context;    //信息内容
     private Date timeStap;   //时间戳
     private String signture;   //数字签名
@@ -60,16 +61,8 @@ public class Message implements java.io.Serializable {
     public void setSignture(String signture) {
         this.signture = signture;
     }
-    public Message(int MesType, String sender, String receiver, String context, String signture, Date timeStap) {
-        this.MesType = MesType;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.context = context;
-        this.signture = signture;
-        this.timeStap = timeStap;
-    }
+
     public Message(){
-
+        this.timeStap = new Date();
     }
-
 }

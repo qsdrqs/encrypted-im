@@ -4,6 +4,7 @@ package module;
 import instance.Client;
 
 import java.net.Socket;
+import java.security.PublicKey;
 import java.util.Scanner;
 
 public class MessageLink {
@@ -11,6 +12,7 @@ public class MessageLink {
     Client client;
     Scanner sc;
     Socket socket;
+    private PublicKey OtherpuK;
     public MessageLink(Client client, Scanner sc) {
         this.client = client;
         this.sc = sc;
@@ -20,6 +22,8 @@ public class MessageLink {
         this.socket = socket;
         Listen listenThread = new Listen();
         listenThread.start();
+        //交换公钥
+       // PukExchange.doExchange(socket,this.client);
         send();
     }
 

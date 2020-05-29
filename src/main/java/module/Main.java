@@ -15,8 +15,6 @@ public class Main {
         } else {
             return false;
         }
-        //TODO:异常判断
-
     }
 
     public static boolean isMessage(Scanner sc) throws Exception{
@@ -32,6 +30,10 @@ public class Main {
             return false;
         }
 
+    }
+    public static String getUserName(Scanner sc)throws Exception{
+        System.out.println("请输入你的名字：");
+        return sc.nextLine();
     }
 
     public static void main (String[] args) throws Exception {
@@ -51,7 +53,7 @@ public class Main {
         socket=link.getSocket();
 
         if (is_message){
-            Client client = new Client(socket);
+            Client client = new Client(socket,getUserName(sc));
             MessageLink messageLink=new MessageLink(client,sc);
             messageLink.run(socket);
         }

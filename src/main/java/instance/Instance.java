@@ -17,12 +17,10 @@ public abstract class Instance {
     }
 
     /*
-       输出获取部分
+       输出部分
      */
     public void sendMessage(Scanner sc) throws Exception {
-       // outputStream = (ObjectOutputStream) socket.getOutputStream();
         while (true) {
-           // OutputStream output = socket.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             Message m = new Message();
             String message=sc.nextLine();
@@ -44,7 +42,7 @@ public abstract class Instance {
     }
 
     /*
-       输入获取部分
+       输入部分
      */
 
     public String receiveMessage() throws Exception {
@@ -56,7 +54,7 @@ public abstract class Instance {
         //obj to bytes
         byte[] bytes = ObjectAndBytes.toByteArray(m);
 
-        //message dencryption
+        //message decryption
 
         //bytes to obj
         Message dencrytedMsg = (Message)ObjectAndBytes.toObject(bytes);
