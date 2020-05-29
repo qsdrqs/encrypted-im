@@ -45,7 +45,6 @@ public abstract class Instance {
 
     public byte[] receiveMessage() throws Exception {
 
-        System.out.println("start reading.");
         byte[] buffer = new byte[10240];
 
         int len=inputStream.read(buffer);

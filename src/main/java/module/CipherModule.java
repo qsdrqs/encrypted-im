@@ -19,7 +19,7 @@ public class CipherModule {
         cipher.init(Cipher.ENCRYPT_MODE, puk);
 
         //拆解部分
-        int MAX_ENCRYPT_BLOCK = 117;
+        int MAX_ENCRYPT_BLOCK = 256;
         int offset = 0;//偏移值
         int bytesLength = message.length;
         byte[] result={};
@@ -45,7 +45,7 @@ public class CipherModule {
         cipher.init(Cipher.DECRYPT_MODE, prk);
 
         //拆解部分
-        int MAX_DECRYPT_BLOCK = 128;
+        int MAX_DECRYPT_BLOCK = 256;
         int offset = 0;//偏移值
         int bytesLength = input.length;
         byte[] result={};

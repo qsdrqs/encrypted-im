@@ -73,7 +73,12 @@ public class MessageLink {
                         System.out.println("远端结束了连接。");
                         break;
                     }
-                    System.out.println("来自" + client.getIP() + "的消息：" + message.getContext());
+
+                    //处理空消息
+                    if(message.getContext().equals("")){
+                        continue;
+                    }
+                    System.out.println("来自" + client.user.getName() + "的消息：" + message.getContext());
                 }
                 client.endReceive();
             } catch (Exception e) {

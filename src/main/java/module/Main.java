@@ -35,7 +35,7 @@ public class Main {
     }
     public static String getUserName(Scanner sc)throws Exception {
         System.out.println("请输入你的名字：");
-        return sc.nextLine();
+        return sc.next();
     }
 
     public static void main (String[] args) throws Exception {

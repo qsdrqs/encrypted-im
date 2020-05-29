@@ -33,7 +33,7 @@ public class User {
         this.name = name;
         // 生成公钥／私钥对:
         KeyPairGenerator kpGen = KeyPairGenerator.getInstance("RSA");
-        kpGen.initialize(1024);
+        kpGen.initialize(2048);
         KeyPair kp = kpGen.generateKeyPair();
         this.prk = kp.getPrivate();
         this.puk = kp.getPublic();
