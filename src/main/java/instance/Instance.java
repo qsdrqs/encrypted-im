@@ -11,6 +11,8 @@ import java.util.Scanner;
 public abstract class Instance {
 
     protected Socket socket;
+    private OutputStream outputStream;
+    private InputStream inputStream;
 
     public Instance(Socket socket) {
         this.socket = socket;
@@ -19,46 +21,38 @@ public abstract class Instance {
     /*
        输出部分
      */
-    public void sendMessage(Scanner sc) throws Exception {
-        while (true) {
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-            Message m = new Message();
-            String message=sc.nextLine();
-            if (message.equals("exit")) {
-                break;
-            }
-            m.setContext(message);
-            m.setTimeStap(new Date());
-            //obj to bytes
-            byte[] bytes = ObjectAndBytes.toByteArray(m);
-            //message encryption
+    public void initSend() throws IOException {
+        outputStream = socket.getOutputStream();
+    }
 
+    public void endSend() throws IOException {
+        outputStream.close();
+    }
 
-            //bytes to obj
-            Message EncryptedMsg = (Message) ObjectAndBytes.toObject(bytes);
-           // output.write(ObjectAndBytes.toByteArray(m));
-            oos.writeObject(EncryptedMsg);
-        }
+    public void sendMessage(byte[] bytes) throws Exception {
+        outputStream.write(bytes);
+
     }
 
     /*
        输入部分
      */
 
-    public String receiveMessage() throws Exception {
+    public void initReceive() throws Exception{
+        inputStream = socket.getInputStream();
+    }
 
-        ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+    public void endReceive() throws Exception{
+        inputStream.close();
+    }
+
+    public byte[] receiveMessage() throws Exception {
+
         System.out.println("start reading.");
+        byte[] bytes = new byte[10240];
 
-        Message m = (Message)input.readObject();
-        //obj to bytes
-        byte[] bytes = ObjectAndBytes.toByteArray(m);
-
-        //message decryption
-
-        //bytes to obj
-        Message dencrytedMsg = (Message)ObjectAndBytes.toObject(bytes);
-        return  dencrytedMsg.getContext();
+        inputStream.read(bytes);
+        return bytes;
     }
 
 }
