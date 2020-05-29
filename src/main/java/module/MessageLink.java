@@ -34,12 +34,10 @@ public class MessageLink {
     }
 
     private class Listen extends Thread {
-
         @Override
         public void run() {
                 try {
                     while (true) {
-
                         String info = client.receiveMessage();
                         System.out.println("Once Receive");
                         if (info.equals("exit")) {
@@ -54,5 +52,4 @@ public class MessageLink {
                 }
         }
     }
-
 }

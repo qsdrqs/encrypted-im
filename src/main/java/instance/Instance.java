@@ -25,13 +25,12 @@ public abstract class Instance {
            // OutputStream output = socket.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             Message m = new Message();
-            m.doInit();
             String message=sc.nextLine();
             if (message.equals("exit")) {
                 break;
             }
             m.setContext(message);
-            m.setTimeStap(new Date().toString());
+            m.setTimeStap(new Date());
             //obj to bytes
             byte[] bytes = ObjectAndBytes.toByteArray(m);
             //message encryption
@@ -58,6 +57,7 @@ public abstract class Instance {
         byte[] bytes = ObjectAndBytes.toByteArray(m);
 
         //message dencryption
+
         //bytes to obj
         Message dencrytedMsg = (Message)ObjectAndBytes.toObject(bytes);
         return  dencrytedMsg.getContext();
