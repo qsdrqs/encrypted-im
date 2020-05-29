@@ -8,7 +8,7 @@ public class ObjectAndBytes {
      * @param obj
      * @return
      */
-    public byte[] toByteArray (Object obj) {
+    public static byte[] toByteArray (Object obj) {
         byte[] bytes = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
@@ -29,7 +29,7 @@ public class ObjectAndBytes {
      * @param bytes
      * @return
      */
-    public Object toObject (byte[] bytes) {
+    public static Object toObject (byte[] bytes) {
         Object obj = null;
         try {
             ByteArrayInputStream bis = new ByteArrayInputStream (bytes);
@@ -43,5 +43,24 @@ public class ObjectAndBytes {
             ex.printStackTrace();
         }
         return obj;
+    }
+
+
+    /**
+     * @fuc 读取流
+     * @param inStream
+     * @return 字节数组
+     * @throws Exception
+     */
+        public static byte[] readStream(InputStream inStream) throws Exception {
+        ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len = -1;
+        while ((len = inStream.read(buffer)) != -1) {
+            outSteam.write(buffer, 0, len);
+        }
+        outSteam.close();
+        inStream.close();
+        return outSteam.toByteArray();
     }
 }
