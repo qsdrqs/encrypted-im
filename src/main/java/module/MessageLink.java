@@ -19,6 +19,7 @@ public class MessageLink {
     private Client client;
     private Scanner sc;
     private PublicKey otherPuK;
+    private Date newestDate=null;
 
     public MessageLink(Client client, Scanner sc,PublicKey otherPuK) {
         this.client = client;
@@ -105,6 +106,13 @@ public class MessageLink {
                         System.out.println("签名验证失败，丢弃消息。");
                         continue;
                     }
+
+                    //防重放
+                    if(newestDate!=null&& message.getTimeStap().before(newestDate)){
+                        System.out.println("时间戳验证失败，丢弃消息。");
+                        continue;
+                    }
+                    newestDate=message.getTimeStap();
 
                     if (message.getContext().equals("exit")) {
                         System.out.println("远端结束了连接。");
