@@ -7,8 +7,8 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
 
-public class CipherModule {
-    /*
+public class AsymCipherModule {
+    /**
      * Cipher加密最大117bytes，解密最大128bytes，因此需要拆解
      * @author qsdrqs
      */

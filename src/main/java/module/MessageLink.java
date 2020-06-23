@@ -3,16 +3,14 @@ package module;
 
 import instance.Client;
 import tools.ObjectAndBytes;
-import tools.CipherModule;
+import tools.AsymCipherModule;
 import tools.SHA256Util;
 
-import java.net.Socket;
 import java.security.PublicKey;
 import java.util.Date;
 import java.util.Scanner;
 
 import common.Message;
-import org.apache.commons.codec.binary.Hex;
 
 public class MessageLink {
 
@@ -34,13 +32,13 @@ public class MessageLink {
 
     private byte[] signature(String source) throws Exception{
         byte[] shaResult=SHA256Util.stringToSHA256(source);
-        byte[] encryptResult=CipherModule.encrypt(shaResult, client.user.getPrk());
+        byte[] encryptResult= AsymCipherModule.encrypt(shaResult, client.user.getPrk());
         return encryptResult;
     }
 
     private boolean chkSign(String source,byte[] signature) throws Exception{
         //decrypt
-        byte[] decryptedBytes=CipherModule.decrypt(signature,otherPuK);
+        byte[] decryptedBytes= AsymCipherModule.decrypt(signature,otherPuK);
 
         //check
         byte[] shaResult=SHA256Util.stringToSHA256(source);
@@ -66,7 +64,7 @@ public class MessageLink {
                 byte[] sourceBytes=ObjectAndBytes.toByteArray(message);
 
                 //encrypt
-                byte[] encryptedBytes=CipherModule.encrypt(sourceBytes,otherPuK);
+                byte[] encryptedBytes= AsymCipherModule.encrypt(sourceBytes,otherPuK);
 
                 client.sendMessage(encryptedBytes);
                 if (message.getContext().equals("exit")) {
@@ -92,7 +90,7 @@ public class MessageLink {
                     }
 
                     //decrypt
-                    byte[] decryptedBytes=CipherModule.decrypt(sourceBytes,client.user.getPrk());
+                    byte[] decryptedBytes= AsymCipherModule.decrypt(sourceBytes,client.user.getPrk());
 
                     Message message=(Message)ObjectAndBytes.toObject(decryptedBytes);
                     //处理空消息

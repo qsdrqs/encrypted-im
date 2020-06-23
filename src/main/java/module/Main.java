@@ -39,7 +39,7 @@ public class Main {
     }
 
     public static void main (String[] args) throws Exception {
-        String serverIp = "127.0.0.1";
+        String ip = "127.0.0.1";
         int port = 12345;
         Scanner sc = new Scanner(System.in);
         boolean is_server = isServer(sc);
@@ -55,7 +55,7 @@ public class Main {
         socket = link.getSocket();
 
         if (is_message) {
-            Client client = new Client(socket, getUserName(sc));
+            Client client = new Client(ip,port, getUserName(sc));
             PublicKeyExchange pukExchange = new PublicKeyExchange(client);
             PublicKey othersPublicKey = pukExchange.doExchange();
             MessageLink messageLink = new MessageLink(client, sc, othersPublicKey);

@@ -7,6 +7,9 @@ public class Message implements java.io.Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
+    /**
+     * MesType 1.
+     */
     private int MesType;
     private String sender;     //信息的发送者
     private String receiver;   //信息的接受者
@@ -64,4 +67,5 @@ public class Message implements java.io.Serializable {
     public Message() {
         this.timeStap = new Date();
     }
+
 }

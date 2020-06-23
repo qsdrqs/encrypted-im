@@ -1,5 +1,9 @@
 package common;
+
 import java.security.*;
+
+import tools.PublicKeyGeneration;
+
 public class User {
     private String name;
     private PrivateKey prk;
@@ -29,13 +33,11 @@ public class User {
         this.puk = puk;
     }
 
-    public User(String name) throws NoSuchAlgorithmException {
+    public User(String name) {
         this.name = name;
         // 生成公钥／私钥对:
-        KeyPairGenerator kpGen = KeyPairGenerator.getInstance("RSA");
-        kpGen.initialize(2048);
-        KeyPair kp = kpGen.generateKeyPair();
-        this.prk = kp.getPrivate();
-        this.puk = kp.getPublic();
+        PublicKeyGeneration publicKeyGeneration = new PublicKeyGeneration(2048);
+        this.prk = publicKeyGeneration.getPrivateKey();
+        this.puk = publicKeyGeneration.getPublicKey();
     }
 }
