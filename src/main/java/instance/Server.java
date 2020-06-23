@@ -1,6 +1,7 @@
 package instance;
 
 import common.Message;
+import common.User;
 import tools.ObjectAndBytes;
 import tools.PublicKeyGeneration;
 
@@ -13,7 +14,7 @@ import java.security.PublicKey;
 import java.util.HashMap;
 
 public class Server {
-    HashMap<Integer, Socket> socketMap;
+    HashMap<User, Socket> socketMap;
     ServerSocket listenSocket = null;
     PublicKey publicKey;
     PrivateKey privateKey;
