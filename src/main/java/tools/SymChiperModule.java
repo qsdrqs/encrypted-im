@@ -19,7 +19,7 @@ public class SymChiperModule {
 
     /***默认向量常量**/
     public static final String IV = "1234567890123456";
-    private final static Logger logger = LoggerFactory.getLogger(AESUtils.class);
+    private final static Logger logger = LoggerFactory.getLogger(SymChiperModule.class);
 
     /**
      * 使用PKCS7Padding填充必须添加一个支持PKCS7Padding的Provider
@@ -109,7 +109,6 @@ public class SymChiperModule {
             }
             String result;
             result = new String(aesDecode, "UTF-8");
-            System.out.println("aesDecode result:" + result);
             return result;
         } catch (Exception e) {
             System.out.println("Exception:" + e.getMessage());
@@ -138,22 +137,3 @@ public class SymChiperModule {
 
     }
 
-
-    public static void main(String[] args) throws Exception {
-        //明文
-        String content = "qq245635595";
-        //密匙
-        String pkey = "wwwwwwwwwwwwwww1wwwwwwwwwwwwwww1";
-        System.out.println("待加密报文:" + content);
-        System.out.println("密匙:" + pkey);
-        String aesEncryptStr = aesEncryptStr(content, pkey);
-        System.out.println("加密报文:" + aesEncryptStr);
-        String aesDecodeStr = aesDecodeStr(aesEncryptStr, pkey);
-        System.out.println("解密报文:" + aesDecodeStr);
-        System.out.println("加解密前后内容是否相等:" + aesDecodeStr.equals(content));
-    }
-
-}
-————————————————
-版权声明：本文为CSDN博主「Guanhua Wang」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_35248009/article/details/86494884
